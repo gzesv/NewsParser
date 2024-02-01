@@ -4,11 +4,11 @@ import java.sql.*;
 
 public class DatabaseHandler {
 
-    private static String DB_URL = "jdbc:postgresql://localhost:5432/postgres";
+    private static final String DB_URL = "jdbc:postgresql://localhost:5432/postgres";
 
-    private static String DB_USERNAME = "postgres";
+    private static final String DB_USERNAME = "postgres";
 
-    private static String DB_PASSWORD = "1234";
+    private static final String DB_PASSWORD = "1234";
 
     public Connection getConnection() throws SQLException {
         return DriverManager.getConnection(DB_URL, DB_USERNAME, DB_PASSWORD);
@@ -20,9 +20,8 @@ public class DatabaseHandler {
         String sqlQuery = "SELECT id " +
                 "FROM public.link " +
                 "WHERE name = \'" + link + "\'";
-        ResultSet result = statement.executeQuery(sqlQuery);
 
-        return result;
+        return statement.executeQuery(sqlQuery);
     }
 
     public ResultSet getRubricsByLink(String link) throws SQLException {
@@ -32,52 +31,48 @@ public class DatabaseHandler {
                 "FROM public.heading as h " +
                 "JOIN public.link as l ON h.link_id = l.id " +
                 "WHERE l.name = \'" + link + "\'";
-        ResultSet result = statement.executeQuery(sqlQuery);
 
-        return result;
+        return statement.executeQuery(sqlQuery);
     }
 
-    public ResultSet getNewsBySourseAndRubricAndDate(String sourse, String rubric, String date) throws SQLException {
+    public ResultSet getNewsBySourceAndRubricAndDate(String source, String rubric, String date) throws SQLException {
         Connection connection = getConnection();
         Statement statement = connection.createStatement();
         String sqlQuery = "SELECT n.id, n.name, n.date, n.heading_id " +
                 "FROM public.news AS n " +
                 "JOIN public.heading AS h ON h.id = n.heading_id " +
                 "JOIN public.link AS l ON l.id = h.link_id " +
-                "WHERE l.name = \'" + sourse + "\'" +
+                "WHERE l.name = \'" + source + "\'" +
                 "AND h.name = \'" + rubric + "\'" +
                 "AND n.date = \'" + date + "\'";
-        ResultSet result = statement.executeQuery(sqlQuery);
 
-        return result;
+        return statement.executeQuery(sqlQuery);
     }
 
-    public ResultSet getNewsBySourseAndRubric(String sourse, String rubric) throws SQLException {
+    public ResultSet getNewsBySourceAndRubric(String source, String rubric) throws SQLException {
         Connection connection = getConnection();
         Statement statement = connection.createStatement();
         String sqlQuery = "SELECT n.id, n.name, n.date, n.heading_id " +
                 "FROM public.news AS n " +
                 "JOIN public.heading AS h ON h.id = n.heading_id " +
                 "JOIN public.link AS l ON l.id = h.link_id " +
-                "WHERE l.name = \'" + sourse + "\'" +
+                "WHERE l.name = \'" + source + "\'" +
                 "AND h.name = \'" + rubric + "\'";
-        ResultSet result = statement.executeQuery(sqlQuery);
 
-        return result;
+        return statement.executeQuery(sqlQuery);
     }
 
-    public ResultSet getNewsBySourseAndDate(String sourse, String date) throws SQLException {
+    public ResultSet getNewsBySourceAndDate(String source, String date) throws SQLException {
         Connection connection = getConnection();
         Statement statement = connection.createStatement();
         String sqlQuery = "SELECT n.id, n.name, n.date, n.heading_id " +
                 "FROM public.news AS n " +
                 "JOIN public.heading AS h ON h.id = n.heading_id " +
                 "JOIN public.link AS l ON l.id = h.link_id " +
-                "WHERE l.name = \'" + sourse + "\'" +
+                "WHERE l.name = \'" + source + "\'" +
                 "AND n.date = \'" + date + "\'";
-        ResultSet result = statement.executeQuery(sqlQuery);
 
-        return result;
+        return statement.executeQuery(sqlQuery);
     }
 
     public ResultSet getNewsByRubricAndDate(String rubric, String date) throws SQLException {
@@ -86,24 +81,22 @@ public class DatabaseHandler {
         String sqlQuery = "SELECT n.id, n.name, n.date, n.heading_id " +
                 "FROM public.news AS n " +
                 "JOIN public.heading AS h ON h.id = n.heading_id " +
-                "AND h.name = \'" + rubric + "\'" +
+                "WHERE h.name = \'" + rubric + "\'" +
                 "AND n.date = \'" + date + "\'";
-        ResultSet result = statement.executeQuery(sqlQuery);
 
-        return result;
+        return statement.executeQuery(sqlQuery);
     }
 
-    public ResultSet getNewsBySourse(String sourse) throws SQLException {
+    public ResultSet getNewsBySource(String source) throws SQLException {
         Connection connection = getConnection();
         Statement statement = connection.createStatement();
         String sqlQuery = "SELECT n.id, n.name, n.date, n.heading_id " +
                 "FROM public.news AS n " +
                 "JOIN public.heading AS h ON h.id = n.heading_id " +
                 "JOIN public.link AS l ON l.id = h.link_id " +
-                "WHERE l.name = \'" + sourse + "\'";
-        ResultSet result = statement.executeQuery(sqlQuery);
+                "WHERE l.name = \'" + source + "\'";
 
-        return result;
+        return statement.executeQuery(sqlQuery);
     }
 
     public ResultSet getNewsByRubric(String rubric) throws SQLException {
@@ -112,10 +105,9 @@ public class DatabaseHandler {
         String sqlQuery = "SELECT n.id, n.name, n.date, n.heading_id " +
                 "FROM public.news AS n " +
                 "JOIN public.heading AS h ON h.id = n.heading_id " +
-                "AND h.name = \'" + rubric + "\'";
-        ResultSet result = statement.executeQuery(sqlQuery);
+                "WHERE h.name = \'" + rubric + "\'";
 
-        return result;
+        return statement.executeQuery(sqlQuery);
     }
 
     public ResultSet getNewsByDate(String date) throws SQLException {
@@ -124,10 +116,9 @@ public class DatabaseHandler {
         String sqlQuery = "SELECT n.id, n.name, n.date, n.heading_id " +
                 "FROM public.news AS n " +
                 "JOIN public.heading AS h ON h.id = n.heading_id " +
-                "AND n.date = \'" + date + "\'";
-        ResultSet result = statement.executeQuery(sqlQuery);
+                "WHERE n.date = \'" + date + "\'";
 
-        return result;
+        return statement.executeQuery(sqlQuery);
     }
 
     public ResultSet getNewsAll() throws SQLException {
@@ -135,9 +126,8 @@ public class DatabaseHandler {
         Statement statement = connection.createStatement();
         String sqlQuery = "SELECT id, name, date, heading_id " +
                 "FROM public.news ";
-        ResultSet result = statement.executeQuery(sqlQuery);
 
-        return result;
+        return statement.executeQuery(sqlQuery);
     }
 
 }
