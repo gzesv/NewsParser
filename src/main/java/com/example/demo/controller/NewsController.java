@@ -1,4 +1,4 @@
-package com.example.demo.сontroller;
+package com.example.demo.controller;
 
 import com.example.demo.model.Link;
 import com.example.demo.model.News;
@@ -36,14 +36,14 @@ public class NewsController {
     }
 
     @GetMapping(value = "/filldb")
-    public void fill(@RequestParam(name = "name", required = false, defaultValue = "World") String name, Model model) throws SQLException, IOException {
+    public void fill(@RequestParam(name = "url", required = false, defaultValue = "https://lenta.ru/") String url, Model model) throws SQLException, IOException {
         Parser parser = new Parser();
 
-        List<Rubric> rubrics = parser.getRubrics("https://lenta.ru/");
+        List<Rubric> rubrics = parser.getRubrics(url);
         psqlService.saveRubric(rubrics);
 
         rubrics = psqlService.getAllRubric();
-        List<News> news = parser.getNews(rubrics);
+        List<News> news = parser.getNews(url, rubrics);
         psqlService.saveNews(news);
     }
 

@@ -43,21 +43,21 @@ public class Parser {
             rubrics.add(new Rubric(
                     el.text(),
                     el.attributes().get("href"),
-                    linkID.hashCode()
+                    linkID
             ));
         }
 
         return rubrics;
     }
 
-    public List<News> getNews(List<Rubric> rubrics) throws IOException {
+    public List<News> getNews(String url, List<Rubric> rubrics) throws IOException {
         List<News> news = new ArrayList<>();
 
         for (Rubric rubric : rubrics) {
-            Document document = getHtmlDocument("https://lenta.ru/" + rubric.getRubricHref());
+            Document document = getHtmlDocument(url + rubric.getRubricHref());
 
             Elements newsName = document.getElementsByClass("card-mini__title");
-            Elements newsDate = document.getElementsByClass("card-mini__info-item").removeAttr("svg");
+            Elements newsDate = document.getElementsByClass("card-mini__info-item");
             int min = Math.min(newsName.size(), newsDate.size());
             for (int j = 0; j < min; j++) {
                 news.add(new News(

@@ -29,18 +29,18 @@ public class NewsService {
         return rubrics;
     }
 
-    public List<News> getNewsByParams(String sourse, String rubric, String date) throws SQLException {
+    public List<News> getNewsByParams(String source, String rubric, String date) throws SQLException {
 
-        if (sourse != null && rubric != null && date != null) {
-            return getNewsBySourseAndRubricAndDate(sourse, rubric, date);
-        } else if (sourse != null && rubric != null) {
-            return getNewsBySourseAndRubric(sourse, rubric);
-        } else if (sourse != null && date != null) {
-            return getNewsBySourseAndDate(sourse, date);
+        if (source != null && rubric != null && date != null) {
+            return getNewsBySourceAndRubricAndDate(source, rubric, date);
+        } else if (source != null && rubric != null) {
+            return getNewsBySourceAndRubric(source, rubric);
+        } else if (source != null && date != null) {
+            return getNewsBySourceAndDate(source, date);
         } else if (rubric != null && date != null) {
             return getNewsByRubricAndDate(rubric, date);
-        } else if (sourse != null) {
-            return getNewsBySourse(sourse);
+        } else if (source != null) {
+            return getNewsBySource(source);
         } else if (rubric != null) {
             return getNewsByRubric(rubric);
         } else if (date != null) {
@@ -50,10 +50,10 @@ public class NewsService {
         }
     }
 
-    private List<News> getNewsBySourseAndRubricAndDate(String sourse, String rubric, String date) throws SQLException {
+    private List<News> getNewsBySourceAndRubricAndDate(String source, String rubric, String date) throws SQLException {
         List<News> news = new ArrayList<>();
 
-        try (ResultSet result = databaseHandler.getNewsBySourseAndRubricAndDate(sourse, rubric, date)) {
+        try (ResultSet result = databaseHandler.getNewsBySourceAndRubricAndDate(source, rubric, date)) {
             while (result.next()) {
                 news.add(new News(
                         result.getInt(1),
@@ -67,10 +67,10 @@ public class NewsService {
         return news;
     }
 
-    private List<News> getNewsBySourseAndRubric(String sourse, String rubric) throws SQLException {
+    private List<News> getNewsBySourceAndRubric(String source, String rubric) throws SQLException {
         List<News> news = new ArrayList<>();
 
-        try (ResultSet result = databaseHandler.getNewsBySourseAndRubric(sourse, rubric)) {
+        try (ResultSet result = databaseHandler.getNewsBySourceAndRubric(source, rubric)) {
             while (result.next()) {
                 news.add(new News(
                         result.getInt(1),
@@ -84,10 +84,10 @@ public class NewsService {
         return news;
     }
 
-    private List<News> getNewsBySourseAndDate(String sourse, String date) throws SQLException {
+    private List<News> getNewsBySourceAndDate(String source, String date) throws SQLException {
         List<News> news = new ArrayList<>();
 
-        try (ResultSet result = databaseHandler.getNewsBySourseAndDate(sourse, date)) {
+        try (ResultSet result = databaseHandler.getNewsBySourceAndDate(source, date)) {
             while (result.next()) {
                 news.add(new News(
                         result.getInt(1),
@@ -118,10 +118,10 @@ public class NewsService {
         return news;
     }
 
-    private List<News> getNewsBySourse(String sourse) throws SQLException {
+    private List<News> getNewsBySource(String source) throws SQLException {
         List<News> news = new ArrayList<>();
 
-        try (ResultSet result = databaseHandler.getNewsBySourse(sourse)) {
+        try (ResultSet result = databaseHandler.getNewsBySource(source)) {
             while (result.next()) {
                 news.add(new News(
                         result.getInt(1),
